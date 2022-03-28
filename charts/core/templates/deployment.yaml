@@ -40,7 +40,14 @@ spec:
             - name: AGGREGATOR_NAME
               value: {{ .Values.name }}
             - name: PROJECT_TOKEN
+              {{- if .Values.project_token_secret }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.project_token_secret }}
+                  key: token.txt
+              {{- else }}
               value: {{ required "A valid Calyptia project_token is required." .Values.project_token }}
+              {{- end }}
             - name: AGGREGATOR_FLUENTBIT_CLOUD_URL
               value: {{ .Values.api_url | default "https://cloud-api.calyptia.com/" }}
             - name: AGGREGATOR_FLUENTBIT_TLS_VERIFY
