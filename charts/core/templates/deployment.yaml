@@ -44,7 +44,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.project_token_secret }}
-                  key: token.txt
+                  key: {{ .Values.project_token_secret_key }}
               {{- else }}
               value: {{ required "A valid Calyptia project_token is required." .Values.project_token }}
               {{- end }}
